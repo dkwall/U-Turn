@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/img/CountUpMarkWhiteBG.svg">
+    <link rel="icon" type="image/x-icon" href="/img/U-TurnMark.svg">
     <!-- INSERT CUSTOM FONTS BELOW-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,6 +18,7 @@
     <!-- Font Awesome imported-->
     <script src="https://kit.fontawesome.com/5db21ba9c6.js" crossorigin="anonymous"></script>
     <!--My personal CSS-->
+    <link rel="stylesheet" href="/css/prism.css">
     <link rel="stylesheet" href="/css/site.css">
 </head>
 
@@ -64,16 +65,52 @@
         <div class="container py-5 px-5">
             <h2 class="border-1 border-bottom border-dark mt-5">The Code for U-TURN</h2>
             <div class="row row-cols-1 row-cols-lg-2">
-                <div class="col-lg-8">
+                <div class="col-lg-8 border-end border-1 border-success">
                     <pre class="line-numbers"><code class="language-javascript">
+                        // The Controller Function
+                        function getValue() {
+                            // get user input of type string that will be reversed
 
+                            document.getElementById("alert").classList.add("invisible");
+
+                            let userString = document.getElementById("userString").value;
+
+                            // Invoke the Logic Function to reverse the string
+                            let revString = reverseString(userString);
+
+                            // call the View Function to update the UI
+                            displayString(revString);
+                        }
+
+                        // The Logic Function(s)
+                        // Reverse the string
+                        function reverseString(userString) {
+                            let revString = [];
+                            for(let i = userString.length - 1; i >= 0; i--) {
+                                revString += userString[i];
+                            }
+                            return revString;
+                        }
+
+                        // The View Function
+                        // Display the reversed string to the user
+                        function displayString(revString) {
+                                //Template literals do not display properly. Please see source code for clarification.
+                            document.getElementById("msg").innerHTML = `Your string reversed is: ${revString}`;
+                            document.getElementById("alert").classList.remove("invisible");
+                        }
                     </code>
                     </pre>
                 </div>
                 <div class="col-lg-4">
-                    <p>The Code is structured in one function.</p>
-                    <h5>Hello World</h5>
-                    <p>Hello World is a function that displays an alert with a message of "Hello World"</p>
+                    <h5>Introduction</h5>
+                    <p>Although this program is likely simple enough to have written a "correct" solution in a conglomerate of a function, I chose to practice clean coding and implemented the idea of Separation of Concerns with an HTML embedded script that initiates the program with the input and click of a button by the user (in a script tag on the app.html there is a single line of javascript that reads: document.getElementById("btnSubmit").addEventListener("click", getValue); ). In my site.js file, I broke out the code into three distinct concerns: a Controller Function, a Logic Function, and a View Function.</p>
+                    <h5>The Controller Function</h5>
+                    <p>The Controller Function, getValue(), is invoked by the user's click of the "Reverse Me" button on The App page. It starts by specifically hiding the response box explicitly, then it stores the user's input in its execution context. It then invokes the Logic Function and passes the user's input as a parameter. Since we will step through the Logic Function later, we will assume it works and reference here only the return value. The returned value is a reversed array (string). Finally, the Controller Function invokes the View Function, which updates the DOM to display the reversed string to the user.</p>
+                    <h5>The Logic Function</h5>
+                    <p>The Logic Function, reverseString(), is declared for the use of the Controller Function. It takes in a single parameter, in this case a string or array is expected. For simplicity, the parameter is named the same as the variable that is being passed in so there is consistency in referencing it throughout the program. The first line in the execution context of reverseString is to declare a new variable and assign it a value of an empty string. This will be used to store the reversed string and will be the return value of the function upon completion. We iterate over the parameter array in a declination pattern, and store each value in the new array. Since we are starting at the end of the original value and working backward, the end result will be an array in the reverse order. Once we reach an index of 0 and store that character in our new array, our function returns the entire array to the context that invoked it.</p>
+                    <h5>The View Function</h5>
+                    <p>The View Function, displayString(), is declared for the use of the Controller Function. It takes in a single parameter, which we expect to be the returned value of the Logic Function. The first action the View Function takes is to push an innerHTML into the DOM at the "alert" ID using a template literal to integrate the variable value "revString." This allows us to use the parameter that is passed in without knowing its exact value until the View Function is invoked. The second and final action the displayString function takes is to remove the "invisible" class on the element with the "alert" ID. With CSS, the "invisible" class hides the element from displaying to the user, so removing it allows the user to see the entire element--which is the response of the application!</p>
                 </div>
             </div>
         </div>
